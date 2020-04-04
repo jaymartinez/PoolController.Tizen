@@ -6,22 +6,19 @@ typedef struct appdata {
 	Evas_Object *label;
 } appdata_s;
 
-static void
-win_delete_request_cb(void *data, Evas_Object *obj, void *event_info)
+static void win_delete_request_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	ui_app_exit();
 }
 
-static void
-win_back_cb(void *data, Evas_Object *obj, void *event_info)
+static void win_back_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	appdata_s *ad = data;
 	/* Let window go to hide state. */
 	elm_win_lower(ad->win);
 }
 
-static void
-create_base_gui(appdata_s *ad)
+static void create_base_gui(appdata_s *ad)
 {
 	/* Window */
 	/* Create and initialize elm_win.
@@ -52,7 +49,7 @@ create_base_gui(appdata_s *ad)
 	/* Create an actual view of the base gui.
 	   Modify this part to change the view. */
 	ad->label = elm_label_add(ad->conform);
-	elm_object_text_set(ad->label, "<align=center>Hello Tizen</align>");
+	elm_object_text_set(ad->label, "<align=center>Yo Wassup!!</align>");
 	evas_object_size_hint_weight_set(ad->label, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	elm_object_content_set(ad->conform, ad->label);
 
@@ -60,8 +57,7 @@ create_base_gui(appdata_s *ad)
 	evas_object_show(ad->win);
 }
 
-static bool
-app_create(void *data)
+static bool app_create(void *data)
 {
 	/* Hook to take necessary actions before main event loop starts
 		Initialize UI resources and application's data
@@ -74,32 +70,27 @@ app_create(void *data)
 	return true;
 }
 
-static void
-app_control(app_control_h app_control, void *data)
+static void app_control(app_control_h app_control, void *data)
 {
 	/* Handle the launch request. */
 }
 
-static void
-app_pause(void *data)
+static void app_pause(void *data)
 {
 	/* Take necessary actions when application becomes invisible. */
 }
 
-static void
-app_resume(void *data)
+static void app_resume(void *data)
 {
 	/* Take necessary actions when application becomes visible. */
 }
 
-static void
-app_terminate(void *data)
+static void app_terminate(void *data)
 {
 	/* Release all resources. */
 }
 
-static void
-ui_app_lang_changed(app_event_info_h event_info, void *user_data)
+static void ui_app_lang_changed(app_event_info_h event_info, void *user_data)
 {
 	/*APP_EVENT_LANGUAGE_CHANGED*/
 	char *locale = NULL;
@@ -109,33 +100,28 @@ ui_app_lang_changed(app_event_info_h event_info, void *user_data)
 	return;
 }
 
-static void
-ui_app_orient_changed(app_event_info_h event_info, void *user_data)
+static void ui_app_orient_changed(app_event_info_h event_info, void *user_data)
 {
 	/*APP_EVENT_DEVICE_ORIENTATION_CHANGED*/
 	return;
 }
 
-static void
-ui_app_region_changed(app_event_info_h event_info, void *user_data)
+static void	ui_app_region_changed(app_event_info_h event_info, void *user_data)
 {
 	/*APP_EVENT_REGION_FORMAT_CHANGED*/
 }
 
-static void
-ui_app_low_battery(app_event_info_h event_info, void *user_data)
+static void ui_app_low_battery(app_event_info_h event_info, void *user_data)
 {
 	/*APP_EVENT_LOW_BATTERY*/
 }
 
-static void
-ui_app_low_memory(app_event_info_h event_info, void *user_data)
+static void ui_app_low_memory(app_event_info_h event_info, void *user_data)
 {
 	/*APP_EVENT_LOW_MEMORY*/
 }
 
-int
-main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 	appdata_s ad = {0,};
 	int ret = 0;
