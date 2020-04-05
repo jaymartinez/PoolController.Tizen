@@ -4,6 +4,8 @@ typedef struct appdata {
 	Evas_Object *win;
 	Evas_Object *conform;
 	Evas_Object *label;
+	Evas_Object *box;
+	Evas_Object *list;
 } appdata_s;
 
 static void win_delete_request_cb(void *data, Evas_Object *obj, void *event_info)
@@ -16,6 +18,10 @@ static void win_back_cb(void *data, Evas_Object *obj, void *event_info)
 	appdata_s *ad = data;
 	/* Let window go to hide state. */
 	elm_win_lower(ad->win);
+}
+
+static void list_item_clicked(void *data, Evas_Object *obj, void *event_info)
+{
 }
 
 static void create_base_gui(appdata_s *ad)
@@ -45,17 +51,47 @@ static void create_base_gui(appdata_s *ad)
 	elm_win_resize_object_add(ad->win, ad->conform);
 	evas_object_show(ad->conform);
 
+	ad->box = elm_box_add(ad->conform);
+	evas_object_size_hint_weight_set(ad->box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_show(ad->box);
+	elm_object_content_set(ad->conform, ad->box);
+
 	/* Label */
 	/* Create an actual view of the base gui.
 	   Modify this part to change the view. */
-	ad->label = elm_label_add(ad->conform);
-	elm_object_text_set(ad->label, "<align=center>Sup Yo!!</align>");
-	evas_object_size_hint_weight_set(ad->label, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	elm_object_content_set(ad->conform, ad->label);
+	ad->label = elm_label_add(ad->box);
+	elm_object_text_set(ad->label, "<align=center><font_size=50>Hello Tizen</font/></align>");
+	evas_object_size_hint_weight_set(ad->label, 0.0, 0.0);
+	/*elm_object_content_set(ad->conform, ad->label);*/
+	evas_object_size_hint_align_set(ad->label, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	evas_object_size_hint_min_set(ad->label, 50, 50);
+	/* Show and add to box */
+	evas_object_show(ad->label);
+	elm_box_pack_end(ad->box, ad->label);
+
+	/* Create the list */
+	ad->list = elm_list_add(ad->box);
+	/* Set the list size */
+	evas_object_size_hint_weight_set(ad->list, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(ad->list, EVAS_HINT_FILL, EVAS_HINT_FILL);
+
+	int i;
+	for (i = 0; i < 4; i++) {
+	    char tmp[8];
+	    snprintf(tmp, sizeof(tmp), "Item %d", i + 1);
+	    /* Add an item to the list */
+	    elm_list_item_append(ad->list, tmp, NULL, NULL, list_item_clicked, ad->list);
+	}
+	/* Show and add to box */
+	evas_object_show(ad->list);
+	elm_box_pack_end(ad->box, ad->list);
 
 	/* Show window after base gui is set up */
 	evas_object_show(ad->win);
 }
+
+
+
 
 static bool app_create(void *data)
 {
